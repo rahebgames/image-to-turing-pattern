@@ -25,4 +25,4 @@ program.
 The majority of Patel's code is limited to the simulator.ts file, although some
 of it is used as a base for parts of main.ts.
 
-If the code breaks, just refresh the page, it should fix it.
+If the program breaks, just refresh the page, it should fix it.

@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "lint": {
-    "files": { "include": ["src/"] }
+    "include": ["src/"]
   },
   "fmt": {
-    "files": { "include": ["src/"] }
+    "include": ["src/"]
   },
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {

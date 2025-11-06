@@ -8,7 +8,9 @@ import makeReactionDiffusionDiagram from "./simulator.ts";
 document.addEventListener("DOMContentLoaded", async () => {
   // load default image
   const imgBitmap = await createImageBitmap(
-    await (await fetch("./turing.jpg")).blob(),
+    await (
+      await fetch("/image-to-turing-pattern/turing.jpg")
+    ).blob(),
   );
 
   const SIMULATION_SIZE = 256;

@@ -6,9 +6,9 @@
 import makeReactionDiffusionDiagram from "./simulator.ts";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Load default image (Lena image, its a reference)
+  // load default image
   const imgBitmap = await createImageBitmap(
-    await (await fetch("./lena.png")).blob(),
+    await (await fetch("./turing.jpg")).blob(),
   );
 
   const SIMULATION_SIZE = 256;
@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const KERNEL_RADIUS = 1; // 3x3 kernel
 
     // Discrete Laplacian convolusion kernel (approximates second derivative for edge detection)
+    // Deno formatter ruins this every time, but it is a 3x3 array.
     const LAPLACIAN_KERNEL = [
       0,
       -1,

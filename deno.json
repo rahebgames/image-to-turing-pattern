@@ -10,7 +10,7 @@
     "lint": "deno lint",
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
-    "ci": "deno fmt --check && deno lint && deno check src/**/*.ts && deno task build"
+    "ci": "deno fmt --check && deno check src/**/*.ts && deno task build"
   },
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {

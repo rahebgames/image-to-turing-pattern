@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: '/image-to-turing-pattern/',
+  base: "/image-to-turing-pattern/",
   root: "src",
   publicDir: "../public",
   build: {

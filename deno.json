@@ -1,0 +1,21 @@
+{
+  "imports": {
+    "regl": "https://esm.sh/regl@2.1.0"
+  },
+  "tasks": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "lint": {
+    "files": { "include": ["src/"] }
+  },
+  "fmt": {
+    "files": { "include": ["src/"] }
+  },
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "lib": ["DOM", "ES2022"]
+  },
+  "nodeModulesDir": "auto"
+}

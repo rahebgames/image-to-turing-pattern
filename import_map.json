@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "regl": "https://esm.sh/regl@2.1.0",
+    "./lena.png?url": "./src/lena.png"
+  }
+}

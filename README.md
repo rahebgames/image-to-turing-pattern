@@ -1,2 +1,1 @@
-# image to turing pattern
-
+# pattern assignment

@@ -16,12 +16,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // preprocess image - resize and convert to grayscale
   function get_image_data(bitmap: ImageBitmap): Float32Array {
-    const canvas = new OffscreenCanvas(IMAGE_SIZE, IMAGE_SIZE);
+    const canvas = new OffscreenCanvas(SIMULATION_SIZE, SIMULATION_SIZE);
     const ctx = canvas.getContext("2d")!;
-    ctx.drawImage(bitmap, 0, 0, IMAGE_SIZE, IMAGE_SIZE);
 
-    const imageData = ctx.getImageData(0, 0, IMAGE_SIZE, IMAGE_SIZE).data;
-    const data = new Float32Array(IMAGE_SIZE * IMAGE_SIZE);
+    ctx.drawImage(bitmap, 0, 0, SIMULATION_SIZE, SIMULATION_SIZE);
+
+    const imageData =
+      ctx.getImageData(0, 0, SIMULATION_SIZE, SIMULATION_SIZE).data;
+    const data = new Float32Array(IMAGE_SIZE * SIMULATION_SIZE);
 
     // Rec. 709 standard luminance constants
     const RED_WEIGHT = 0.299;
@@ -44,6 +46,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   // see https://homepages.inf.ed.ac.uk/rbf/HIPR2/log.htm
   // enhance edges to allow for cleaner lines in visualization
   function enhanceEdges(data: Float32Array, size: number): Float32Array {
+    if (data.length !== size * size) {
+      console.error(
+        "enhanceEdges: data.length does not match size×size",
+        data.length,
+        size,
+      );
+      // Optionally resize or clamp?
+      // For now, just return zeros if mismatched
+      return new Float32Array(size * size);
+    }
+
     const output = new Float32Array(data.length);
     const KERNEL_RADIUS = 1; // 3x3 kernel
 
@@ -111,9 +124,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   function getSlider(id: string): number {
     const el = document.getElementById(id) as HTMLInputElement;
     const value = el.valueAsNumber;
-    el.previousSibling!.textContent = value.toFixed(3);
+    el.previousSibling!.textContent = value.toFixed(3) + "  ";
     return value;
   }
+
+  // handle image upload from user
+  document.getElementById("image-upload")!.addEventListener(
+    "change",
+    async (e) => {
+      const input = e.target as HTMLInputElement;
+      if (!input.files || input.files.length === 0) return;
+
+      const file = input.files[0];
+      const imgBitmap = await createImageBitmap(file);
+
+      // regenerate concentration data from uploaded image
+      const newConcentrations = get_image_data(imgBitmap);
+      const newEnhancedEdges = enhanceEdges(newConcentrations, IMAGE_SIZE);
+
+      initialConcentrations.set(newConcentrations);
+      enhancedEdgeMap.set(newEnhancedEdges);
+      diagram1.updateFeedMask(enhancedEdgeMap);
+      diagram1.reloadInitialBitmap();
+      diagram1.reset();
+    },
+  );
 
   // Initialize simulation with configured parameters
   const diagram1 = makeReactionDiffusionDiagram(

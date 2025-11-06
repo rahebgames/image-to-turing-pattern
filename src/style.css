@@ -1,0 +1,68 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: whitesmoke;
+  font-size: 32px;
+  font-family: Monaco, monospace;
+}
+
+#container {
+  text-align: center;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+input[type="range"] {
+  width: 200px;
+  margin: 0;
+}
+
+button {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  padding: 8px 16px;
+  font-size: 1em;
+}
+
+#reaction-diffusion-1 {
+  display: block;
+  width: 512px;
+  height: 512px;
+  margin: 0 auto 20px auto;
+  image-rendering: crisp-edges;
+}
+
+.upload {
+  margin-top: 16px;
+  margin-left: 114px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+#image-upload {
+  font-size: 18px;
+}
+
+.upload-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#upload-text {
+  font-size: 28px;
+  color: white;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+}

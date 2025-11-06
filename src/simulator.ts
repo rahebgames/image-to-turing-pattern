@@ -271,8 +271,40 @@ export default function makeReactionDiffusionDiagram(
     });
   });
 
+  // allow dynamic update of feed mask
+  function updateFeedMask(newFeedMask: Float32Array) {
+    const expectedLength = params.size * params.size;
+    if (newFeedMask.length !== expectedLength) {
+      console.warn(
+        `updateFeedMask: expected ${expectedLength} elements, got ${newFeedMask.length}. Padding/clamping.`,
+      );
+      const fixed = new Float32Array(expectedLength);
+      fixed.set(newFeedMask.subarray(0, expectedLength));
+      newFeedMask = fixed;
+    }
+
+    if (feedMaskTexture) {
+      feedMaskTexture({
+        data: newFeedMask,
+        shape: [params.size, params.size, 1],
+      });
+    }
+  }
+
+  function reloadInitialBitmap() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, params.size, params.size);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, params.size, params.size);
+    ctx.translate(params.size / 2, params.size / 2);
+    ctx.scale(params.size / 2, params.size / 2);
+    params.initial_bitmap(ctx);
+  }
+
   // allow reset function to be used elsewhere (reset button)
   return {
     reset,
+    updateFeedMask,
+    reloadInitialBitmap,
   };
 }
